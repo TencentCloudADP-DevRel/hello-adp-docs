@@ -2,30 +2,34 @@
 
 import { useTheme } from 'next-themes';
 import { useEffect, useRef, useState } from 'react';
-import mermaid from 'mermaid';
 
 interface MermaidProps {
   chart: string;
 }
 
-// 初始化mermaid配置
-mermaid.initialize({
-  startOnLoad: true,
-  theme: 'default',
-  securityLevel: 'loose',
-});
-
 export function Mermaid({ chart }: MermaidProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [svg, setSvg] = useState<string>('');
   const [id] = useState<string>(`mermaid-${Math.random().toString(36).substring(2, 10)}`);
+  const mermaidRef = useRef<any>(null);
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === 'dark';
 
   useEffect(() => {
+    let mounted = true;
+
+    const loadMermaid = async () => {
+      if (!mermaidRef.current) {
+        const mod = await import('mermaid');
+        mermaidRef.current = mod.default ?? mod;
+      }
+      return mermaidRef.current;
+    };
+
     const renderChart = async () => {
       if (!ref.current) return;
-      
+
+      const mermaid = await loadMermaid();
       mermaid.initialize({
         startOnLoad: true,
         theme: isDark ? 'dark' : 'default',
@@ -34,16 +38,23 @@ export function Mermaid({ chart }: MermaidProps) {
 
       try {
         const { svg } = await mermaid.render(id, chart);
-        setSvg(svg);
+        if (mounted) {
+          setSvg(svg);
+        }
       } catch (error) {
         console.error('Error rendering mermaid chart:', error);
-        setSvg(`<div class="text-red-500 p-2 border border-red-400 rounded">
-          Error rendering chart: ${(error as Error).message || String(error)}
-        </div>`);
+        if (mounted) {
+          setSvg(`<div class="text-red-500 p-2 border border-red-400 rounded">
+            Error rendering chart: ${(error as Error).message || String(error)}
+          </div>`);
+        }
       }
     };
 
     renderChart();
+    return () => {
+      mounted = false;
+    };
   }, [chart, id, isDark]);
 
   return (

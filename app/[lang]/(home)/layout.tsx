@@ -38,7 +38,7 @@ export default function Layout({
       links={[
         {
           text: docText,
-          url: `/${lang}/docs`,
+          url: `/docs/${lang}`,
         },
         {
           text: githubText,

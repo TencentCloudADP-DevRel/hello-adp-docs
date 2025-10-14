@@ -1,9 +1,9 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-- `app/` hosts the Next.js App Router; the `[lang]/` segment drives locale-specific routes, with `(home)` for the landing page and `docs/` for MDX-rendered guides.
+- `app/` hosts the Next.js App Router; the `[lang]/` segment drives the locale landing page and `docs/` under each locale renders MDX guides.
 - `components/` contains reusable UI (analytics hook-up, docs widgets, MDX helpers); prefer co-locating feature-specific variants under nested folders.
-- `content/docs/` stores source-of-truth prose in MDX plus `meta*.json` descriptors consumed by Fumadocs; keep filenames kebab-cased.
+- `content/docs/<lang>/` stores source-of-truth prose in MDX plus `meta.json` descriptors consumed by Fumadocs; keep filenames kebab-cased.
 - `lib/` holds shared utilities such as i18n glue and Fumadocs bindings; reuse via the `@/*` path alias defined in `tsconfig.json`.
 - Static assets live under `public/`; add new media there and reference with absolute `/` paths.
 
@@ -21,12 +21,12 @@
 - Run `next lint` once configured; until then, rely on editor-integrated ESLint/Prettier.
 
 ## Documentation & Content Authoring
-- Place new articles in `content/docs/` with frontmatter that matches the schemas declared in `source.config.ts`.
-- Update `meta.json` (and `meta.zh.json` when localizing) to surface content in navigation.
+- Place new articles in `content/docs/<lang>/` with frontmatter that matches the schemas declared in `source.config.ts`.
+- Update each locale’s `meta.json` to surface content in navigation.
 - Use MDX components from `components/docs/` for callouts, diagrams (`mdx/mermaid.tsx`), and interactive embeds.
 
 ## Testing Guidelines
-- No automated test suite ships yet; perform manual smoke tests against the localized routes (`/en`, `/zh`) before opening a PR.
+- No automated test suite ships yet; perform manual smoke tests against the localized routes (`/docs/en`, `/docs/zh`) before opening a PR.
 - When introducing critical logic, add colocated `*.test.ts(x)` files using Vitest + React Testing Library (preferred stack for Next 15) and document new scripts in `package.json`.
 
 ## Commit & Pull Request Guidelines

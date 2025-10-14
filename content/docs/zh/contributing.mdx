@@ -45,27 +45,28 @@ git clone https://github.com/你的用户名/hello-adp.git
 
 ```
 content/                   # 文档内容主目录
-├── docs/                  # 所有文档资源
-│   ├── index.{lang}.mdx   # 首页文档
-│   ├── meta.{lang}.json   # 元数据配置
-│   ├── contributing.{lang}.mdx # 贡献指南
-│   ├── knowledge-base/    # 知识库相关文档
-│   │   ├── meta.{lang}.json    # 知识库板块元数据
-│   │   └── image-retrieval.{lang}.mdx # 图文知识库文档
-│   ├── plugin/            # 插件相关文档
-│   │   ├── meta.{lang}.json    # 插件板块元数据
-│   │   └── ... 各种插件文档
-│   └── workflow/          # 工作流相关文档
-│       ├── meta.{lang}.json    # 工作流板块元数据
-│       ├── node/              # 节点特定文档
-│       │   └── ... 节点相关文档
-│       ├── workflow-chatflow-difference.{lang}.mdx # 工作流和对话流比较
-│       └── twitter-mbti-receipt.{lang}.mdx # Twitter MBTI 案例
+├── docs/
+│   ├── en/                # 英文文档
+│   │   ├── meta.json      # 顶层导航配置
+│   │   ├── index.mdx      # 首页文档
+│   │   ├── quickstart.mdx
+│   │   ├── contributing.mdx
+│   │   ├── workflow/
+│   │   │   ├── meta.json
+│   │   │   └── node/
+│   │   │       ├── meta.json
+│   │   │       └── parameter-extraction.mdx
+│   │   └── ...            # 其他板块（playground/、plugin/ 等）
+│   └── zh/                # 中文文档（结构与 en 相同）
+│       ├── meta.json
+│       ├── index.mdx
+│       ├── quickstart.mdx
+│       └── ...
 ```
 
 其中，每个文档目录下的结构基本遵循以下原则：
 
-1. `meta.{lang}.json`文件：控制该目录下的文档在导航菜单中的显示顺序和结构，例如：
+1. `meta.json` 文件：控制该目录下的文档在导航菜单中的显示顺序和结构，例如：
    ```json
    {
        "title": "文档标题",
@@ -92,13 +93,13 @@ content/                   # 文档内容主目录
    ---
    ```
 
-3. 子目录：更细分的内容类别，每个子目录也需要有自己的`meta.{lang}.json`文件
+3. 子目录：用于进一步组织内容。每个子目录在不同语言目录下都需要有各自的 `meta.json`。
 
-文档的文件名格式是 `document.{lang}.mdx`
+文档在不同语言中的文件名保持一致，只是存放在对应的语言目录中，例如：
 
-中文文档为： `document.zh.mdx`
-英文文档为： `document.en.mdx`
-日文文档为： `document.ja.mdx`
+- 中文：`content/docs/zh/getting-started.mdx`
+- 英文：`content/docs/en/getting-started.mdx`
+- 日文：`content/docs/ja/getting-started.mdx`
 
 #### 多语言化（i18n）
 
@@ -109,12 +110,12 @@ content/                   # 文档内容主目录
 你需要通过 `@` 添加 `i8n.mdc` ，以下的 prompt 可以作为参考：
 
 ```
-帮我把 xxx.{lang}.mdx i8n，翻译为xxx
+帮我把 content/docs/en/xxx.mdx 翻译到 content/docs/<locale>/xxx.mdx
 ```
 
 ![image.png](https://s2.loli.net/2025/05/18/PwH4iSQTJGpLtkv.png)
 
-Cursor rule 中内置了如何配置文件名、`meta.{lang}.json`。
+Cursor rule 中内置了如何在 `content/docs/<locale>/` 下放置文件以及更新各语言目录的 `meta.json`。
 
 #### 图片
 
@@ -160,10 +161,10 @@ yarn dev
 
 必须完成的文件：
 
-1. 英文版本（基础版本）：`document.mdx`
-2. 中文版本：`document.zh.mdx`
-3. 日文版本：`document.ja.mdx`
-4. 各语言的元数据文件：`meta.json`、`meta.zh.json`、`meta.ja.json`
+1. 英文版本（基础版本）：`content/docs/en/document.mdx`
+2. 中文版本：`content/docs/zh/document.mdx`
+3. 日文版本：`content/docs/ja/document.mdx`
+4. 各语言的元数据文件：`content/docs/en/meta.json`、`content/docs/zh/meta.json`、`content/docs/ja/meta.json`
 
 检查方法：
 
@@ -180,9 +181,9 @@ yarn dev
 #### 测试所有语言版本
 
 切换不同语言查看文档：
-- 英文版：`http://localhost:3000/en/docs/...`
-- 中文版：`http://localhost:3000/zh/docs/...`
-- 日文版：`http://localhost:3000/ja/docs/...`
+- 英文版：`http://localhost:3000/docs/en/...`
+- 中文版：`http://localhost:3000/docs/zh/...`
+- 日文版：`http://localhost:3000/docs/ja/...`
 
 确保所有语言版本都能正确显示，并且内容一致。
 
@@ -244,7 +245,3 @@ Issue格式参考如下：
 ```
 
 我们的会评审您提交的Issue，并在接受后为您创建相应的文档。如有问题或需要进一步讨论，请在Issue中留言。
-
-
-
-

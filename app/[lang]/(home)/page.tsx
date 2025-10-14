@@ -222,7 +222,7 @@ async function buildCategoryLinks(
 
     const href = directPage?.url
       || articles.find((item) => item.categoryKey === article.categoryKey)?.href
-      || (lang === (i18n.defaultLanguage as LanguageKey) ? '/docs' : `/${lang}/docs`);
+      || `/docs/${lang}`;
 
     links.push({
       key: article.categoryKey,
@@ -253,7 +253,7 @@ export default async function HomePage({
 
   const totalCount = articleViews.length;
   const [featured, ...rest] = articleViews;
-  const searchHref = language === (i18n.defaultLanguage as LanguageKey) ? '/docs' : `/${language}/docs`;
+  const searchHref = `/docs/${language}`;
 
   return (
     <LandingShowcase

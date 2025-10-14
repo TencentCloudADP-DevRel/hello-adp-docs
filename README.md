@@ -45,7 +45,7 @@ Hello ADP supports multiple languages through a well-structured internationaliza
 
 - **Cursor Rules Integration**: When using Cursor IDE, you can quickly access i18n guidelines by using `cursor rules:@i18n.mdc`
 - **Streamlined Workflow**: This rule provides templates for translation and automates the meta.json configuration
-- **File Naming Conventions**: Follow the pattern `filename.{lang}.mdx` for content files (e.g., `index.mdx`, `index.zh.mdx`)
+- **File Organization**: Keep identical filenames across locales under `content/docs/<lang>/` (e.g., `content/docs/en/index.mdx`, `content/docs/zh/index.mdx`)
 - **Translation Status**: English content is considered the source of truth, with Chinese translations maintained in parallel
 
 The i18n rule helps ensure consistent structure across all language versions while maintaining the unique linguistic nuances of each translation.
@@ -61,13 +61,14 @@ The i18n rule helps ensure consistent structure across all language versions whi
 ```
 hello-adp/
 ├── app/                  # Next.js app directory
-│   ├── [lang]/           # Multilingual route handling
+│   ├── [lang]/           # Legacy landing pages per locale
+│   └── docs/             # Documentation routes (/docs/<lang>/**)
 │   ├── api/              # API routes
 │   └── global.css        # Global styles
 ├── content/              # Documentation content (MDX files)
-│   ├── docs/             # Main documentation
-│   ├── plugin/           # Plugin-specific documentation
-│   └── workflow/         # Workflow guides
+│   └── docs/
+│       ├── en/           # English MDX + meta.json
+│       └── zh/           # Chinese MDX + meta.json
 ├── public/               # Static assets
 │   └── images/           # Image files
 └── lib/                  # Shared utilities

@@ -15,10 +15,21 @@ const iconHandler = (icon: string | undefined): ReactElement | undefined => {
 };
 
 // See https://fumadocs.vercel.app/docs/headless/source-api for more info
+const resolveDocsUrl = (slugs: string[], locale?: string) => {
+  const segments = ['docs'];
+  const language = locale && i18n.languages.includes(locale) ? locale : i18n.defaultLanguage;
+  if (language) {
+    segments.push(language);
+  }
+  segments.push(...slugs);
+  return `/${segments.filter(Boolean).join('/')}`;
+};
+
 export const source = loader({
   i18n,
   // it assigns a URL to your pages
   baseUrl: '/docs',
+  url: resolveDocsUrl,
   source: docs.toFumadocsSource(),
   icon: iconHandler, // 添加图标处理器
 });

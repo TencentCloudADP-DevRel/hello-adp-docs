@@ -16,8 +16,8 @@ export function baseOptions(locale: string): BaseLayoutProps {
     title: (
       <>
           <Image
-            src="/images/hello-adp.png"
-            alt="Hello ADP Logo"
+            src="/images/adp-icon-transparent.png"
+            alt="ADP-Chat-Client"
             width={100}
             height={50}
           />

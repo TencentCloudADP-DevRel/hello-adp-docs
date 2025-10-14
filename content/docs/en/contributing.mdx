@@ -43,27 +43,30 @@ Open the project in a new window and review the structure:
 
 ```
 content/                   # Docs root
-├── docs/                  # All documentation resources
-│   ├── index.{lang}.mdx   # Landing page
-│   ├── meta.{lang}.json   # Top-level navigation config
-│   ├── contributing.{lang}.mdx # Contribution guide
-│   ├── knowledge-base/    # Knowledge base docs
-│   │   ├── meta.{lang}.json    # Navigation config
-│   │   └── image-retrieval.{lang}.mdx # Knowledge base example
-│   ├── plugin/            # Plugin docs
-│   │   ├── meta.{lang}.json    # Plugin navigation
-│   │   └── ... individual plugin docs
-│   └── workflow/          # Workflow docs
-│       ├── meta.{lang}.json    # Workflow navigation
-│       ├── node/              # Node reference docs
-│       │   └── ... node topics
-│       ├── workflow-chatflow-difference.{lang}.mdx # Workflow vs. chatflow
-│       └── twitter-mbti-receipt.{lang}.mdx # Twitter MBTI example
+├── docs/
+│   ├── en/                # English sources
+│   │   ├── meta.json      # Top-level navigation config
+│   │   ├── index.mdx      # Landing page
+│   │   ├── quickstart.mdx # Quickstart guide
+│   │   ├── contributing.mdx
+│   │   ├── workflow/
+│   │   │   ├── meta.json
+│   │   │   └── node/
+│   │   │       ├── meta.json
+│   │   │       └── parameter-extraction.mdx
+│   │   └── ...            # Additional sections (playground/, plugin/, etc.)
+│   └── zh/                # Chinese sources (mirrors en/)
+│       ├── meta.json
+│       ├── index.mdx
+│       ├── quickstart.mdx
+│       └── ...
 ```
+
+Each locale lives under its own folder inside `content/docs`. Keep the directory tree identical across languages so navigation metadata stays in sync.
 
 Each folder follows the same principles:
 
-1. `meta.{lang}.json`: controls ordering and structure in the navigation drawer. Example:
+1. `meta.json`: controls ordering and structure in the navigation drawer. Example:
    ```json
    {
        "title": "Section title",
@@ -90,13 +93,13 @@ Each folder follows the same principles:
    ---
    ```
 
-3. Subfolders: further organize content. Each subfolder also needs its own `meta.{lang}.json` file.
+3. Subfolders: further organize content. Each subfolder also needs its own `meta.json` file per locale directory.
 
-Document filenames follow the `document.{lang}.mdx` convention.
+Document filenames are shared across locales. Use the same slug inside every language folder, for example:
 
-- Chinese: `document.zh.mdx`
-- English: `document.mdx`
-- Japanese: `document.ja.mdx`
+- English: `content/docs/en/getting-started.mdx`
+- Chinese: `content/docs/zh/getting-started.mdx`
+- Japanese: `content/docs/ja/getting-started.mdx`
 
 #### Localization workflow (i18n)
 
@@ -107,12 +110,12 @@ The repo ships with an i18n rule at `.cursor/rules/i18n.mdc`.
 Summon it with `@i18n.mdc` inside Cursor. A sample prompt:
 
 ```
-Translate xxx.{lang}.mdx into xxx for the remaining locales.
+Translate content/docs/en/xxx.mdx into the remaining locales under content/docs/<locale>/xxx.mdx.
 ```
 
 ![image.png](https://s2.loli.net/2025/05/18/PwH4iSQTJGpLtkv.png)
 
-The rule documents how to name files, update `meta.{lang}.json`, and keep variants in sync.
+The rule documents how to place files under `content/docs/<locale>/`, update each locale's `meta.json`, and keep variants in sync.
 
 #### Images
 
@@ -154,10 +157,10 @@ Visit `http://localhost:3000` and confirm your docs look good.
 
 Make sure you have:
 
-1. English base file: `document.mdx`
-2. Chinese variant: `document.zh.mdx`
-3. Japanese variant: `document.ja.mdx`
-4. Navigation metadata for each locale: `meta.json`, `meta.zh.json`, `meta.ja.json`
+1. English base file: `content/docs/en/document.mdx`
+2. Chinese variant: `content/docs/zh/document.mdx`
+3. Japanese variant: `content/docs/ja/document.mdx`
+4. Navigation metadata for each locale: `content/docs/en/meta.json`, `content/docs/zh/meta.json`, `content/docs/ja/meta.json`
 
 Check with:
 
@@ -165,9 +168,9 @@ Check with:
 - Watch for errors such as missing locale files, malformed frontmatter, mismatched entries in `meta.json`, or broken image URLs.
 
 Inspect every locale in the browser:
-- English: `http://localhost:3000/en/docs/...`
-- Chinese: `http://localhost:3000/zh/docs/...`
-- Japanese: `http://localhost:3000/ja/docs/...`
+- English: `http://localhost:3000/docs/en/...`
+- Chinese: `http://localhost:3000/docs/zh/...`
+- Japanese: `http://localhost:3000/docs/ja/...`
 
 All variants should render correctly and convey the same message.
 
