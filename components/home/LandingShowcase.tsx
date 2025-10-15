@@ -3,7 +3,25 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import type { ArticleCardView, CategoryLink } from '@/app/[lang]/(home)/page';
+
+// 定义本地类型
+export interface ArticleCardView {
+  id: string;
+  title: string;
+  description?: string;
+  href: string;
+  categoryLabel: string;
+  author?: string;
+  avatar?: string;
+  updatedLabel: string;
+  demoUrl?: string;
+}
+
+export interface CategoryLink {
+  key?: string;
+  label: string;
+  href: string;
+}
 
 interface LandingCopy {
   heroTitle: string;

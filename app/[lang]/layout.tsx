@@ -6,6 +6,7 @@ import { use } from 'react';
 import type { ReactNode } from 'react';
 import type { Translations } from 'fumadocs-ui/i18n';
 import type { Metadata } from 'next';
+import { i18n } from '@/lib/i18n';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -16,6 +17,12 @@ const zh: Partial<Translations> = {
   search: '搜索'
 };
 
+// 生成静态参数，用于静态导出
+export function generateStaticParams() {
+  return i18n.languages.map((lang) => ({
+    lang,
+  }));
+}
 
 // 可用语言配置
 const locales = [

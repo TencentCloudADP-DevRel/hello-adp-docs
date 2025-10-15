@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ docs/plan-b ]
+    branches: [ main, docs/plan-b ]
   workflow_dispatch:
 
 permissions:
@@ -24,7 +24,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'npm'
 
       - name: Setup Pages
@@ -35,8 +35,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Generate Fumadocs MDX files
+        run: npm run postinstall
+
       - name: Build with Next.js
         run: npm run build
+        env:
+          NODE_ENV: production
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

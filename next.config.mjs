@@ -6,7 +6,15 @@ const withMDX = createMDX();
 const config = {
   reactStrictMode: true,
   turbopack: false,
+  
+  // GitHub Pages 静态导出配置
+  output: 'export',
+  trailingSlash: true,
+  basePath: '/hello-adp-docs',
+  assetPrefix: '/hello-adp-docs/',
+  
   images: {
+    unoptimized: true, // 静态导出必需
     remotePatterns: [
       {
         protocol: 'https',
@@ -30,7 +38,7 @@ config.headers = async () => [
     headers: [
       {
         key: 'Content-Security-Policy',
-        value: "frame-ancestors 'self' *.hellodify.com; frame-src 'self' *.hellodify.com http://*.hellodify.com https://*.hellodify.com https://giscus.app https://www.youtube.com https://*.youtube.com https://*.vercel.app https://vercel.com; child-src 'self' *.hellodify.com http://*.hellodify.com https://*.hellodify.com https://giscus.app https://www.youtube.com https://*.youtube.com https://*.vercel.app https://vercel.com; img-src 'self' data: *.hellodify.com http://*.hellodify.com https://*.hellodify.com s2.loli.net https://avatars.githubusercontent.com https://twimg.com https://pbs.twimg.com https://*.github.io https://*.youtube.com https://*.ytimg.com https://*.vercel.app https://vercel.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://giscus.app https://www.googletagmanager.com https://www.google-analytics.com; connect-src 'self' https://api.github.com https://www.google-analytics.com https://www.googletagmanager.com https://analytics.google.com;"
+        value: "frame-ancestors 'self' *.tencentcloud.com *.hellodify.com; frame-src 'self' *.tencentcloud.com *.hellodify.com https://giscus.app https://www.youtube.com/embed/ https://*.youtube.com https://*.vercel.app; child-src 'self' *.tencentcloud.com *.hellodify.com https://giscus.app https://www.youtube.com/embed/ https://*.youtube.com https://*.vercel.app; img-src 'self' data: *.tencentcloud.com *.hellodify.com https://avatars.githubusercontent.com https://twimg.com https://pbs.twimg.com https://*.github.io https://*.youtube.com https://*.ytimg.com https://*.vercel.app; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://giscus.app https://www.googletagmanager.com https://www.google-analytics.com; connect-src 'self' https://api.github.com https://www.google-analytics.com https://www.googletagmanager.com https://analytics.google.com;"
       }
     ]
   }

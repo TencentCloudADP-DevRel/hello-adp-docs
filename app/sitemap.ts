@@ -1,8 +1,11 @@
 import type { MetadataRoute } from 'next';
 import { i18n } from '@/lib/i18n';
 
-// 获取基本URL，根据环境变量设置或默认为本地开发URL
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://hellodify.com';
+// 强制静态生成，用于静态导出
+export const dynamic = 'force-static';
+
+// 获取基本URL，根据环境变量设置或默认为 GitHub Pages URL
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://tencentcloudadp-devrel.github.io/hello-adp-docs';
 
 // 确保 BASE_URL 包含协议前缀
 function formatBaseUrl(url: string): string {
