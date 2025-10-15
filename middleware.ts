@@ -3,6 +3,11 @@ import { NextRequest, NextResponse } from 'next/server';
 
 // 创建基于Fumadocs的i18n中间件
 export function middleware(request: NextRequest) {
+  // 在静态导出模式下跳过 middleware
+  if (process.env.NODE_ENV === 'production') {
+    return;
+  }
+
   // 提取当前路径
   const pathname = request.nextUrl.pathname;
   
