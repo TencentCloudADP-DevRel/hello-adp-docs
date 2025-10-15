@@ -1,17 +1,9 @@
 {
     "icon":"home-4-line",
     "pages": [
-        "---简介---",
         "index",
-        "quickstart",
-        "contributing",
-        "---功能---",
-        "workflow",
-        "others",
-        "---广场---",
-        "playground/general",
-        "playground/life",
-        "playground/business"
+        "quick-start",
+        "develop"
     ],
     "defaultOpen": true
 } 
