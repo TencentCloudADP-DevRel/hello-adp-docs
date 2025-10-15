@@ -1,17 +1,9 @@
 {
-    "icon":"home-4-line",
-    "pages": [
-        "---Introduction---",
-        "index",
-        "quickstart",
-        "contributing",
-        "---Features---",
-        "workflow",
-        "others",
-        "---Playground---",
-        "playground/general",
-        "playground/life",
-        "playground/business"
-    ],
-    "defaultOpen": true
-} 
+  "icon": "home-4-line",
+  "defaultOpen": true,
+  "pages": [
+    "index",
+    "quick-start",
+    "develop"
+  ]
+}

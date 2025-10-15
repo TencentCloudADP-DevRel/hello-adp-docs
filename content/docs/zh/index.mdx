@@ -1,71 +1,79 @@
 ---
-title: 欢迎使用 Hello ADP
-description: 从零开始学习腾讯云智能体开发平台！
-enableComments: true
-author: "Steven Lynn"
-github_username: "stvlynn"
-x_username: "Stv_Lynn"
+title: ADP Chat Client 简介
+description: 了解 adp-chat-client 的定位、核心能力与架构，开启企业级智能体应用之旅。
+sidebar_position: 1
 ---
 
-## 这是什么？
+## 概览
 
-这是 Hello ADP，一个介绍腾讯云智能体开发平台（ADP）的基础知识的文档。它提供了我们平台的概述，作为进一步探索和实践学习的起点。
+adp-chat-client 是一款开源的智能体对话前端应用。借助它，您可以将 [腾讯云智能体开发平台（Tencent Cloud ADP）](https://cloud.tencent.com/product/tcadp) 上构建的智能体，快速发布为 Web 应用，并方便地嵌入到小程序、Android、iOS 等多种形态。系统内置实时对话、对话历史、语音输入、图片理解等能力，并支持第三方身份体系对接（OAuth / URL 跳转）。前端采用 TDesign 组件体系，支持主题和交互自定义；后端提供 Docker 打包方案，降低集成与运维门槛。
 
-浏览教程，跟随示例，开始您的 ADP 掌握之旅！
+## 为什么选择 adp-chat-client
 
-### 👋 加入我们！
+- **5 分钟上线**：Docker 一键部署，免去繁琐的环境与模块对接流程，加速从研发走向上线。
+- **零门槛复用 ADP 能力**：直接对接 ADP 的成熟能力（自然语言处理、多模态交互、知识库/RAG、工作流等），无需重复造轮子。
+- **企业级全链路**：账户体系、审计合规、对话数据持久化与检索、HTTPS/反代部署——覆盖从体验到治理的完整链路。
 
-<Cards>
-  <Card 
-    icon={<i className="ri-discord-fill ri-lg" />} 
-    href="https://discord.gg/QjqhkHQVVM" 
-    title="Discord 频道"
-  >
-    加入我们的 Discord 社区，了解更多关于 ADP 的信息。
-  </Card>
-  <Card 
-    icon={<i className="ri-github-fill ri-lg" />} 
-    href="https://github.com/stvlynn/hello-adp" 
-    title="GitHub 仓库"
-  >
-    为本项目点一个 star ⭐
-  </Card>
-</Cards>
+## 核心能力
 
-## 什么是腾讯云智能体开发平台（ADP）？
+- **多端交付**：Web 首发，可嵌入小程序 / Android / iOS。
+- **实时对话**：稳定连接 ADP 智能体，支持文本、图文混合交互。
+- **对话管理**：自动持久化，按用户 / 应用 / 时间分维度管理，可检索和导出（支持对接 PostgreSQL 等数据库）。
+- **语音输入**：接入腾讯云 ASR（WebSocket），提供 < 800 ms 级别的低延迟体验。
+- **图片理解**：对话中上传并解析图片，实现自然的多模态对话。
+- **账户体系对接**：支持 GitHub、Microsoft Entra ID（OAuth），或通过 URL 跳转轻量接入自建账号系统。
+- **主题与 UI**：基于 TDesign，快速换肤与组件扩展。
+- **容器化部署**：Docker 封装，环境可复用、易迁移，方便灰度与回滚。
 
-腾讯云智能体开发平台（Tencent Cloud Agent Development Platform，简称 ADP）是腾讯云推出的企业级智能体开发平台，深度整合 LLM+RAG 增强检索、自动化工作流、多 Agent 协作架构等核心能力，助力企业高效搭建稳定、安全、符合业务场景的智能体应用。
+## 核心组成
 
-### 平台核心优势
+### 1. 前端
 
-**领先的智能体对话效果**
-- 内置行业实践流程和领先的 RAG 算法
-- 支持导入文档/问答对，让智能体对接企业多模态知识
-- 画布式灵活编排工作流，可快速接入企业系统 API
+- **技术栈**：Vue 3（Composition API）+ TypeScript + TDesign
+- **特点**：
+  - 高复用的组件体系，易维护、可拓展
+  - 支持主题色、字号、交互行为等个性化设置
+  - 适配企业内嵌场景（iFrame / WebView / 小程序 Web 化容器等）
 
-**全面的智能体开发框架**
-- 提供 LLM+RAG、Multi-agent、Workflow 等多种开发框架
-- 支持应用配置-调试-评测-发布一站式工具链
-- 降低智能体构建门槛，提升开发效率
+### 2. 后端
 
-**丰富的开发资源库**
-- 预置精选官方插件及 MCP 插件
-- 支持智能文档解析、多轮改写、embedding 等能力
-- 提供智能体开发所需的核心技术组件
+- **技术栈**：Python（Sanic）
+- **职责**：
+  - 统一 **router** 对外暴露 HTTP 接口
+  - **core** 封装对 ADP 及第三方服务的调用
+  - **middleware** 处理鉴权、审计、限流、日志等治理能力
+  - **config** 统一管理密钥与多环境参数
+  - **持久化**：对话记录、用户态可接入 PostgreSQL 等数据库
 
-### 主要应用场景
+## 账户体系对接
 
-**智能客服**
-基于腾讯云行业大模型，提供垂直领域的专业化智能客服能力，实现知识生产效率、问题覆盖率、回答准确率跨越式提升。
+两种登录方案帮助你适配不同的企业 IT 环境：
 
-**企业知识库问答助手**
-支持企业级知识库搜索和智能问答，对多模态知识进行高效处理、分析、检索、问答，助力企业实现知识库数智化服务升级。
+### 1) OAuth
 
-**车载助手**
-结合车载系统特点，提供个性化知识问答服务，支持复杂汽车操作手册快速解析及检索，实现拟人化车内人机交互。
+GitHub OAuth 与 Microsoft Entra ID OAuth 免改造接入，在 `.env` 中配置即可。需要扩展其他 OAuth 平台，可参照 `server/core/oauth.py` 的适配逻辑。  
+**优势：** 改造成本低，账号与权限统一，满足审计与合规需求。
 
-## 下一步是什么？
+### 2) URL 跳转
 
-<Cards>
-  <Card title="快速开始" href="/docs/zh/quickstart" />
-</Cards> 
+若暂时无法提供标准 OAuth，可使用更轻量的 URL 跳转方案：
+
+1. 既有系统生成携带 `CustomerId`、`Name`、`ExtraInfo`、`Timestamp`、`Code` 的登录 URL。
+2. 用户点击后登录。
+3. adp-chat-client 校验签名、自动创建/绑定账户，并建立会话。
+
+## 架构一览
+
+| 组成部分 | 说明 |
+| :-- | :-- |
+| config | 配置系统 |
+| core | 核心业务逻辑，独立于协议（HTTP/stdio 等） |
+| middleware | Sanic 服务端中间件 |
+| router | 对外 HTTP 入口，通常是对 core 的包装 |
+| static | 前端静态资源 |
+| test | 测试用例 |
+| util | 辅助工具 |
+
+## 下一步
+
+已经了解 adp-chat-client 的定位与能力？继续查看 [快速开始](/docs/zh/quick-start)，完成本地或服务器部署。 
