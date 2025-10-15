@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ docs/adp-chat-client ]
+    branches: [ docs/plan-b ]
   workflow_dispatch:
 
 permissions:
